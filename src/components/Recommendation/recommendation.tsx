@@ -1,5 +1,5 @@
-// Seu componente React
 import styles from "./recommendation.module.css";
+import { outfit } from "@/Fonts/my_fonts";
 
 type buttonTypes = {
     text: string,
@@ -11,7 +11,7 @@ export default function RecommendationButton({ text, onClick, loading = false }:
     return (
         <button onClick={onClick} className={styles.button} type="button">
             <div className={styles.line}>
-                {!loading && <p>{text}</p>}
+                {!loading && <p className={outfit.className}>{text}</p>}
                 <img
                     src={loading ? "/img/loading.png" : "/img/flash.png"}
                     className={`${loading ? styles.loop : ""}`}
