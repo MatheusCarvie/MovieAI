@@ -1,0 +1,55 @@
+.button {
+    user-select: none;
+    cursor: pointer;
+    height: 48px;
+    width: auto;
+    padding: 0px 20px;
+    appearance: none;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    transition: padding 0.3s ease-in;
+    background-image: linear-gradient(to right, var(--purple), var(--rose));
+}
+
+.button:hover {
+    background-image: linear-gradient(to right, var(--purpleHover), var(--roseHover));
+}
+
+.button:hover .line img {
+    background-color: var(--lightRoseHover);
+}
+
+.line {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-family: "Outfit", sans-serif;
+    color: white;
+    gap: 6px;
+    line-height: 140%;
+}
+
+.line img {
+    pointer-events: none;
+    color: white;
+    padding: 7px;
+    background-color: var(--lightRose);
+    border-radius: 50%;
+}
+
+.line .loop {
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
