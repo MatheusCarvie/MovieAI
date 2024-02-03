@@ -1,0 +1,21 @@
+.container {
+    display: none;
+    z-index: 9999999999;
+    user-select: none;
+    height: auto;
+    width: auto;
+    max-width: 200px;
+    position: absolute;
+    background-image: linear-gradient(to right, var(--purple), var(--rose));
+    font-size: 12px;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: display 0.3s ease-in, opacity 0.3s ease-in;
+}
+
+.visible {
+    display: block;
+    opacity: 1;
+}

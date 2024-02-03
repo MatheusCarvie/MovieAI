@@ -8,9 +8,11 @@
     height: auto;
     user-select: none;
     background-color: var(--backgroundColor);
-    filter: drop-shadow(0 0 5px var(--purpleOpacity));
     cursor: pointer;
     transition: transform 0.2s ease-in;
+    border-radius: 8px;
+    animation: moveBoxShadow 3s linear infinite;
+    /* animation: moveShadow 3s linear infinite; */
 }
 
 .card_movie:hover {
@@ -82,4 +84,42 @@
 .time p {
     font-weight: 400;
     font-size: 12px;
+}
+
+@keyframes moveShadow {
+    from {
+        filter: drop-shadow(-5px 5px 5px var(--purpleOpacity));
+    }
+
+    50% {
+        filter: drop-shadow(5px -5px 5px var(--purpleOpacity));
+    }
+
+    to {
+        filter: drop-shadow(-5px 5px 5px var(--purpleOpacity));
+    }
+}
+
+@keyframes moveBoxShadow {
+    from {
+        box-shadow: 2px 4px 8px var(--purpleOpacity);
+    }
+
+    50% {
+        box-shadow: 2px -4px 8px var(--purpleOpacity);
+    }
+
+    to {
+        box-shadow: 2px 4px 8px var(--purpleOpacity);
+    }
+}
+
+@keyframes rotateBorder {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }

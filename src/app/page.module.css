@@ -41,6 +41,7 @@
 
 .list {
     width: 100%;
+    gap: 10px;
     padding: 10px;
     height: auto;
     overflow: hidden;
@@ -61,5 +62,5 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: var(--purple);
+    background-image: linear-gradient(to left, var(--purple), var(--rose));
 }

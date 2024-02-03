@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "./page.module.css";
 import RecommendationButton from "@/components/Recommendation/recommendation";
 import CardMovie from "@/components/CardMovie/card_movie";
