@@ -1,5 +1,4 @@
 "use client"
-
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./tooltip.module.css";
 import { createPortal } from "react-dom";
@@ -7,17 +6,19 @@ import { createPortal } from "react-dom";
 type TooltipProps = {
     text: string,
     children: React.ReactNode,
-    offSet?: number
+    offSetTop?: number,
+    offSetHorizontal?: number
 };
 
-export default function Tooltip({ text, children, offSet = 50 }: TooltipProps) {
-    const currentRootID: string = "portal_root";
+export default function Tooltip({ text, children, offSetTop = 35, offSetHorizontal = 0.05 }: TooltipProps) {
+    const currentRootID: string = "Tooltip_Root";
     const [position, setPosition] = useState({ top: 0, left: 0 });
     const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
-    const [childrenHover, setChildrenHover] = useState(false);
-    const [tooltipHovered, setTooltipHovered] = useState(false);
+    const [childrenVisible, setChildrenVisible] = useState(false);
     const childrenRef = useRef<HTMLDivElement | null>(null);
+    const leaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+    // Faz o gerenciamento da criação da div Tooltip_Root
     useEffect(() => {
         const tooltipRoot = document.getElementById(currentRootID);
 
@@ -31,32 +32,58 @@ export default function Tooltip({ text, children, offSet = 50 }: TooltipProps) {
             calculatePosition();
             setPortalElement(tooltipRoot);
         }
-    }, []);
 
+        return () => {
+            // Remove o tooltip caso o children for removido
+            if (portalElement) {
+                document.body.removeChild(portalElement);
+            }
+
+            // Limpar o timeout ao desmontar o componente
+            if (leaveTimeoutRef.current !== null) {
+                clearTimeout(leaveTimeoutRef.current);
+            }
+        };
+    }, [portalElement]);
+
+    // Calcula a posição em que o tooltip vai ficar
     const calculatePosition = () => {
         if (childrenRef.current) {
             const { top, left, width } = childrenRef.current.getBoundingClientRect();
-            setPosition({ top: top - offSet, left: left + width / 2 - 100 });
+            setPosition({ top: top - offSetTop, left: left + width * offSetHorizontal });
         }
     };
 
+    const handleMouseEnter = () => {
+        // Cancelar o timeout do mouseLeave se estiver ativo
+        if (leaveTimeoutRef.current !== null) {
+            clearTimeout(leaveTimeoutRef.current);
+        }
+        setChildrenVisible(true);
+    };
+
+    const handleMouseLeave = () => {
+        // Adiciona um time para remover o tooltip
+        leaveTimeoutRef.current = setTimeout(() => {
+            setChildrenVisible(false);
+        }, 400);
+    };
+
     return (
-        <div className={styles.tooltip}>
+        <div>
             <div
                 ref={childrenRef}
-                onMouseEnter={() => setChildrenHover(true)}
-                onMouseLeave={() => {
-                    if (!tooltipHovered) setChildrenHover(false);
-                }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
             >
                 {children}
             </div>
-            {portalElement &&
+            {childrenVisible && portalElement &&
                 createPortal(
                     <div
-                        onMouseEnter={() => setTooltipHovered(true)}
-                        onMouseLeave={() => setTooltipHovered(false)}
-                        className={`${styles.container} ${childrenHover ? styles.visible : ""}`}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        className={styles.tooltip}
                         style={{ top: position.top, left: position.left }}
                     >
                         {text}
