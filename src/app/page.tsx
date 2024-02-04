@@ -13,10 +13,22 @@ export default function Home() {
           />
         </header>
         <div className={styles.list}>
-          <CardMovie />
-          <CardMovie />
-          <CardMovie />
-          <CardMovie />
+          <CardMovie
+            id="1"
+            name="Oppenheimer Oppenheimer"
+          />
+          <CardMovie
+            id="2"
+            name="Oppenheimersssbb"
+          />
+          <CardMovie
+            id="3"
+            name="Oppenheimer"
+          />
+          <CardMovie
+            id="4"
+            name="Oppenheimer"
+          />
         </div>
       </main>
       <footer className={styles.footer}>

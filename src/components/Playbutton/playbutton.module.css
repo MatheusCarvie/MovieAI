@@ -1,0 +1,61 @@
+.button {
+    user-select: none;
+    cursor: pointer;
+    height: 38px;
+    width: 100%;
+    appearance: none;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    transition: padding 0.3s ease-in;
+    background-color: var(--blackGrey);
+}
+
+.button:hover {
+    background-color: var(--blackGreyHover);
+}
+
+.button:hover .circle {
+    background-color: var(--blackGrey);
+}
+
+.line {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    color: white;
+    width: 100%;
+    gap: 6px;
+    line-height: 140%;
+}
+
+.circle {
+    padding: 5px;
+    clip-path: circle();
+    background-color: var(--backgroundColor);
+}
+
+.circle span {
+    margin-top: 5px;
+    color: transparent;
+    font-size: 18px;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image: linear-gradient(to right, var(--purpleHover), var(--roseHover));
+}
+
+.loop {
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
