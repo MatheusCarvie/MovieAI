@@ -1,12 +1,10 @@
 .body {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow-x: hidden;
-    overflow-y: auto;
     background-color: var(--backgroundColor);
 }
 
@@ -18,11 +16,11 @@
     flex-direction: column;
     width: 80%;
     height: auto;
-    padding: 4%;
 }
 
 .header {
     width: 100%;
+    padding: 0px 30px;
     height: 48px;
     display: flex;
     flex-direction: row;
@@ -40,27 +38,86 @@
 }
 
 .list {
+    padding: 20px;
     width: 100%;
-    gap: 10px;
-    padding: 10px;
     height: auto;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    column-gap: 10px;
+    row-gap: 20px;
+    justify-items: center;
+    margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
 .footer {
+    margin-top: auto;
     user-select: none;
     font-size: 12px;
     height: auto;
     color: white;
     padding: 10px;
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-image: linear-gradient(to left, var(--purple), var(--rose));
+}
+
+@media (max-width: 900px) {
+    .body .main .header .button .line {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    .logo {
+        width: 70px;
+        height: 40px;
+    }
+
+    .body .main .header .button {
+        background-color: transparent;
+        background-image: linear-gradient(to right, transparent, transparent);
+    }
+
+    .body .main .header .button img {
+        padding: 10px;
+        background-color: transparent;
+        background-image: linear-gradient(to right, var(--purple), var(--rose));
+        box-shadow: 0 0 10px var(--purple);
+        animation: rotateIcon 3s linear infinite;
+    }
+
+    .body .main .header .button .line .text {
+        display: none;
+    }
+
+    .footer {
+        font-size: 10px;
+    }
+
+    .list {
+        padding: 0px;
+        row-gap: 0px;
+        grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
+    }
+
+    .card_movie {
+        transform: scale(0.9);
+    }
+
+    .card_movie:hover {
+        transform: scale(0.8);
+    }
+}
+
+@keyframes rotateIcon {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }

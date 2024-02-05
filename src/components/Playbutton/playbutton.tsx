@@ -5,9 +5,10 @@ type buttonTypes = {
     text: string,
     onClick?: () => void;
     loading?: boolean,
+    hasTrailer: boolean
 }
 
-export default function PlayButton({ text, onClick, loading = false }: buttonTypes) {
+export default function PlayButton({ text, onClick, loading = false, hasTrailer }: buttonTypes) {
     return (
         <button onClick={onClick} className={styles.button} type="button">
             <div className={styles.line}>
@@ -16,7 +17,7 @@ export default function PlayButton({ text, onClick, loading = false }: buttonTyp
                         {loading ? "progress_activity" : "play_arrow"}
                     </span>
                 </div>
-                {!loading && <p className={outfit.className}>{text}</p>}
+                {!loading && <p className={outfit.className}>{hasTrailer ? text : "Não possui trailer"}</p>}
             </div>
         </button >
     );
