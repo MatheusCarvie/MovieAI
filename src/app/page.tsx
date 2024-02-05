@@ -49,12 +49,12 @@ export default function Home() {
   function getApiKey(): string | undefined {
     if (process.env.NODE_ENV === 'development') {
       // Em desenvolvimento local
-      console.log("Local");
+      console.log("Local: ", process.env.NEXT_PUBLIC_API_KEY);
       return process.env.NEXT_PUBLIC_API_KEY;
     } else {
       // Em produção na Vercel
-      console.log("Produção");
-      return process.env.DB_API_KEY;
+      console.log("Produção: ", process.env.DB_API_KEY);
+      return process.env.NEXT_PUBLIC_API_KEY;
     }
   }
 
@@ -64,7 +64,6 @@ export default function Home() {
       setMovieList([]);
 
       const apiKey = getApiKey();
-      console.log(apiKey);
       const pageNumber: string = randomNumber({ limit: 100 }).toString();
 
       // Obter a lista de filmes
