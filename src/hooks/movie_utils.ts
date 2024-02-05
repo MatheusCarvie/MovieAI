@@ -6,6 +6,8 @@ type movieUtilsTypes = {
 }
 
 export default function MoviesUtils({ numberAllMovies }: movieUtilsTypes): Promise<movieTypes[]> {
+    console.log('Entrou em MoviesUtils');
+
     const randomNumber = ({ limit }: { limit: number }): number => {
         const generateNumber = Math.random() * limit + 1;
         const number = Math.floor(generateNumber);
@@ -25,8 +27,11 @@ export default function MoviesUtils({ numberAllMovies }: movieUtilsTypes): Promi
     };
 
     return new Promise<movieTypes[]>(async (resolve, reject) => {
+        console.log('Entrou na Promisse');
         try {
             const apiKey = getApiKey();
+            console.log('API Key:', apiKey);
+
             const pageNumber: string = randomNumber({ limit: 100 }).toString();
 
             // Obter a lista de filmes
@@ -34,11 +39,15 @@ export default function MoviesUtils({ numberAllMovies }: movieUtilsTypes): Promi
                 url: `https://api.themoviedb.org/3/movie/popular?language=pt-BR&page=${pageNumber}&append_to_response=videos&api_key=${apiKey}`
             });
 
+            console.log('Response:', response);
+
             // Ordenar a lista de filmes pelo vote_average em ordem decrescente
             const moviesSortedByVote = response.results.sort((a, b) => b.vote_average - a.vote_average);
 
             // Pegar uma quantidade de movies com base no numberAllMovies
             const topMovies = moviesSortedByVote.slice(0, numberAllMovies);
+
+            console.log('Top Movies:', topMovies);
 
             // Obter informações detalhadas dos filmes usando Promise.all
             const detailedMovies = await Promise.all(
@@ -87,6 +96,8 @@ export default function MoviesUtils({ numberAllMovies }: movieUtilsTypes): Promi
                     return detailedMovie;
                 })
             );
+
+            console.log('Detailed Movies:', detailedMovies);
 
             resolve(detailedMovies);
         } catch (error) {
