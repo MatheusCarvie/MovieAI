@@ -1,5 +1,5 @@
 "use client"
-import styles from "./index.module.css";
+import styles from "./page.module.css";
 import RecommendationButton from "@/components/Recommendation/recommendation";
 import CardMovie from "@/components/CardMovie/card_movie";
 import { useEffect, useRef, useState } from "react";
@@ -36,25 +36,27 @@ import axios from "axios";
 // };
 
 export default function Home() {
-  const [numberAllMovies, setNumberAllMovies] = useState<number>(2);
+  const [numberAllMovies, setNumberAllMovies] = useState<number>(10);
   const [movieList, setMovieList] = useState<movieTypes[]>([]);
-
-  const loading = useRef<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const doOnce = useRef<boolean>(false);
 
   useEffect(() => {
     // Garante que o useEffect seja chamada apenas uma vez
-    if (!loading.current) fetchMoviesData();
+    if (!doOnce.current) fetchMoviesData();
   }, []);
 
   const fetchMoviesData = async () => {
     try {
-      loading.current = true;
+      setLoading(true);
+      doOnce.current = true;
       const response = await axios.get(`/api/movies?numberMovies=${numberAllMovies}`);
       setMovieList(response.data);
     } catch (error) {
       console.error('Erro ao obter dados:', error);
     } finally {
-      loading.current = false;
+      setLoading(false);
+      doOnce.current = false;
     }
   };
 
@@ -66,15 +68,15 @@ export default function Home() {
           <RecommendationButton
             text="Nova recomendação"
             onClick={() => {
-              if (!loading.current) fetchMoviesData();
+              if (!loading) fetchMoviesData();
             }}
-            loading={loading.current}
+            loading={loading}
             additiveClass={
               [styles.button, styles.line, styles.text]
             }
           />
         </header>
-        {!loading.current && (
+        {!loading && (
           <div className={styles.list}>
             {movieList.map((movie, index) => {
               const vote = movie.vote_average.toFixed(1);
