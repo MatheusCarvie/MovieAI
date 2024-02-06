@@ -35,41 +35,24 @@ import axios from "axios";
 //   return { data: response.data };
 // };
 
-export default function Home({ detailedMovies }: { detailedMovies: movieTypes[] }) {
-  //console.log(detailedMovies);
-
-  const [numberAllMovies, setNumberAllMovies] = useState<number>(4);
+export default function Home() {
+  const [numberAllMovies, setNumberAllMovies] = useState<number>(2);
   const [movieList, setMovieList] = useState<movieTypes[]>([]);
 
   const loading = useRef<boolean>(false);
 
   useEffect(() => {
     // Garante que o useEffect seja chamada apenas uma vez
-    if (!loading.current) getMovies();
+    if (!loading.current) fetchMoviesData();
   }, []);
 
-  // useEffect(() => {
-  //   setMovieList(detailedMovies);
-  //   //loadGit();
-  // }, []);
-
-  const loadGit = () => {
-    axios.get("https://api.github.com/repos/vercel/next.js")
-      .then((response) => {
-        const data = response.data;
-        console.log(data);
-      });
-  }
-
-  const getMovies = async () => {
+  const fetchMoviesData = async () => {
     try {
       loading.current = true;
-      setMovieList([]);
-
-      const movieUtils = await MoviesUtils({ numberAllMovies: numberAllMovies });
-      setMovieList(movieUtils);
+      const response = await axios.get(`/api/movies?numberMovies=${numberAllMovies}`);
+      setMovieList(response.data);
     } catch (error) {
-      console.error("Erro ao obter movies:", error);
+      console.error('Erro ao obter dados:', error);
     } finally {
       loading.current = false;
     }
@@ -82,7 +65,9 @@ export default function Home({ detailedMovies }: { detailedMovies: movieTypes[] 
           <img className={styles.logo} src="/img/logo.png" alt="MovieAI" />
           <RecommendationButton
             text="Nova recomendação"
-            onClick={() => getMovies()}
+            onClick={() => {
+              if (!loading.current) fetchMoviesData();
+            }}
             loading={loading.current}
             additiveClass={
               [styles.button, styles.line, styles.text]
@@ -145,3 +130,42 @@ export default function Home({ detailedMovies }: { detailedMovies: movieTypes[] 
 //     };
 //   }
 // }
+
+
+
+
+// ==============================================
+
+
+
+// useEffect(() => {
+//   // Garante que o useEffect seja chamada apenas uma vez
+//   if (!loading.current) getMovies();
+// }, []);
+
+// useEffect(() => {
+//   setMovieList(detailedMovies);
+//   //loadGit();
+// }, []);
+
+// const loadGit = () => {
+//   axios.get("https://api.github.com/repos/vercel/next.js")
+//     .then((response) => {
+//       const data = response.data;
+//       console.log(data);
+//     });
+// }
+
+// const getMovies = async () => {
+//   try {
+//     loading.current = true;
+//     setMovieList([]);
+
+//     const movieUtils = await MoviesUtils({ numberAllMovies: numberAllMovies });
+//     setMovieList(movieUtils);
+//   } catch (error) {
+//     console.error("Erro ao obter movies:", error);
+//   } finally {
+//     loading.current = false;
+//   }
+// };
