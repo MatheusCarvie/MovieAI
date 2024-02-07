@@ -22,7 +22,7 @@ export default function RecommendationButton({ text, onClick, loading = false, a
                     alt="Icone Flash"
                 />
             </div>
-            {buttonRef.current && buttonRef.current?.offsetWidth >= 78 && (
+            {buttonRef.current && buttonRef.current?.offsetWidth < 50 && (
                 <ReactTooltip id={text} style={{ backgroundImage: "linear-gradient(to left, var(--purple), var(--rose))" }}>
                     {text}
                 </ReactTooltip>

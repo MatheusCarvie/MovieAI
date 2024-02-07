@@ -4,39 +4,11 @@ import RecommendationButton from "@/components/Recommendation/recommendation";
 import CardMovie from "@/components/CardMovie/card_movie";
 import { useEffect, useRef, useState } from "react";
 import { movieTypes } from "@/types/movie";
-import MoviesUtils from "../hooks/movie_utils";
 import axios from "axios";
-
-// Home.getInitialProps = async () => {
-//   // Número de filmes desejados
-//   const numbers = 1;
-
-//   try {
-//     // Chame a função MoviesUtils no lado do servidor
-//     const detailedMovies = await MoviesUtils({ numberAllMovies: numbers });
-
-//     console.log(detailedMovies);
-
-//     // Retorne os dados que serão passados como props para o componente Home
-//     return {
-//       detailedMovies,
-//     };
-//   } catch (error) {
-//     console.error("Erro ao obter dados do servidor:", error);
-
-//     return {
-//       detailedMovies: [],
-//     };
-//   }
-// };
-
-// Home.getInitialProps = async () => {
-//   const response = await axios.get("https://api.github.com/repos/vercel/next.js");
-//   return { data: response.data };
-// };
+import DropDown from "@/components/DropDown/drop_down";
 
 export default function Home() {
-  const [numberAllMovies, setNumberAllMovies] = useState<number>(10);
+  const [numberAllMovies, setNumberAllMovies] = useState<number>(4);
   const [movieList, setMovieList] = useState<movieTypes[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const doOnce = useRef<boolean>(false);
@@ -65,16 +37,24 @@ export default function Home() {
       <main className={styles.main}>
         <header className={styles.header}>
           <img className={styles.logo} src="/img/logo.png" alt="MovieAI" />
-          <RecommendationButton
-            text="Nova recomendação"
-            onClick={() => {
-              if (!loading) fetchMoviesData();
-            }}
-            loading={loading}
-            additiveClass={
-              [styles.button, styles.line, styles.text]
+          <div className={styles.rightLine}>
+            {!loading &&
+              <DropDown
+                value={numberAllMovies}
+                onChange={(event) => setNumberAllMovies(parseInt(event.target.value))}
+              />
             }
-          />
+            <RecommendationButton
+              text="Nova recomendação"
+              onClick={() => {
+                if (!loading) fetchMoviesData();
+              }}
+              loading={loading}
+              additiveClass={
+                [styles.button, styles.line, styles.text]
+              }
+            />
+          </div>
         </header>
         {!loading && (
           <div className={styles.list}>
@@ -106,68 +86,3 @@ export default function Home() {
     </div>
   );
 }
-
-// export async function getServerSideProps() {
-//   // Número de filmes desejados
-//   const numberAllMovies = 1;
-
-//   try {
-//     // Chame a função MoviesUtils no lado do servidor
-//     const detailedMovies = await MoviesUtils({ numberAllMovies });
-
-//     // Os dados retornados serão passados como props para o componente Home
-//     return {
-//       props: {
-//         detailedMovies,
-//       },
-//     };
-//   } catch (error) {
-//     console.error("Erro ao obter dados:", error);
-
-//     // Se ocorrer um erro, você pode decidir como lidar com isso
-//     return {
-//       props: {
-//         detailedMovies: [],
-//       },
-//     };
-//   }
-// }
-
-
-
-
-// ==============================================
-
-
-
-// useEffect(() => {
-//   // Garante que o useEffect seja chamada apenas uma vez
-//   if (!loading.current) getMovies();
-// }, []);
-
-// useEffect(() => {
-//   setMovieList(detailedMovies);
-//   //loadGit();
-// }, []);
-
-// const loadGit = () => {
-//   axios.get("https://api.github.com/repos/vercel/next.js")
-//     .then((response) => {
-//       const data = response.data;
-//       console.log(data);
-//     });
-// }
-
-// const getMovies = async () => {
-//   try {
-//     loading.current = true;
-//     setMovieList([]);
-
-//     const movieUtils = await MoviesUtils({ numberAllMovies: numberAllMovies });
-//     setMovieList(movieUtils);
-//   } catch (error) {
-//     console.error("Erro ao obter movies:", error);
-//   } finally {
-//     loading.current = false;
-//   }
-// };

@@ -1,0 +1,38 @@
+.selectBody {
+    position: relative;
+    width: 100px;
+    height: 48px;
+    user-select: none;
+}
+
+.select {
+    height: 100%;
+    color: white;
+    border-radius: 4px;
+    appearance: none;
+    outline: none;
+    border: none;
+    padding: 0px 10px;
+    background-color: var(--rose);
+}
+
+.select option {
+    appearance: none;
+    color: white;
+    border-radius: 0px;
+    background-color: var(--rose);
+}
+
+.arrow {
+    pointer-events: none;
+    text-align: center;
+    font-size: 30px;
+    right: 0;
+    height: 100%;
+    padding-top: 10px;
+    color: white;
+    position: absolute;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    background-color: var(--purple);
+}
