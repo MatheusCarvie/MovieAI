@@ -35,18 +35,18 @@ export default function CardMovie({ id, name, img, vote, year, duration, trailer
             <div className={styles.line_info}>
                 <h1 ref={h1Ref} data-tooltip-id={id} className={outfit.className}>{name}</h1>
                 <div className={styles.star}>
-                    <span className="material-symbols-outlined">star</span>
+                    <span translate="no" className="material-symbols-outlined">star</span>
                     <h2 className={outfit.className}>{vote}</h2>
                 </div>
             </div>
             <img src={img} alt={name} loading="eager" />
             <div style={{ marginBottom: "8px" }} className={styles.line_info}>
                 <div className={styles.time}>
-                    <span style={{ fontVariationSettings: "'FILL' 0" }} className="material-symbols-outlined">schedule</span>
+                    <span translate="no" style={{ fontVariationSettings: "'FILL' 0" }} className="material-symbols-outlined">schedule</span>
                     <p>{duration}</p>
                 </div>
                 <div className={styles.time}>
-                    <span style={{ fontVariationSettings: "'FILL' 0" }} className="material-symbols-outlined">calendar_month</span>
+                    <span translate="no" style={{ fontVariationSettings: "'FILL' 0" }} className="material-symbols-outlined">calendar_month</span>
                     <p>{year.toString()}</p>
                 </div>
             </div>
