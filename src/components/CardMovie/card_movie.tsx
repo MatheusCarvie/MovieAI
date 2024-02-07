@@ -39,7 +39,7 @@ export default function CardMovie({ id, name, img, vote, year, duration, trailer
                     <h2 className={outfit.className}>{vote}</h2>
                 </div>
             </div>
-            <img src={img} alt="Oppenheimer" />
+            <img src={img} alt={name} loading="eager" />
             <div style={{ marginBottom: "8px" }} className={styles.line_info}>
                 <div className={styles.time}>
                     <span style={{ fontVariationSettings: "'FILL' 0" }} className="material-symbols-outlined">schedule</span>
